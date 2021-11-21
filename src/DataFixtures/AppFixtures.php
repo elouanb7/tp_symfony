@@ -59,8 +59,8 @@ class AppFixtures extends Fixture
                 $manager->persist($soiree);
                 $manager->flush();
                 $userSoiree = new userSoiree();
-                $userSoiree->setIdSoiree($soiree)
-                    ->setIdUser($user)
+                $userSoiree->setSoiree($soiree)
+                    ->setUser($user)
                     ->setIsHost(true)
                     ->setIsGuest(false);
                 $manager->persist($userSoiree);
