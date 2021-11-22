@@ -3,46 +3,56 @@
 {% block title %}MyParty - Soirée {{ soiree.id }}{% endblock %}
 
 {% block body %}
-        <div class="container mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title"><span class="h5">Soirée #{{ soiree.id }}</span><br><small>Créée depuis
-                            le {{ soiree.createdAt | date('d/m/Y') }} par <a href="{{ path('profile',{'id': host.id }) }}">{{ host.FullName }}</a></small></div>
-                    <div class="card-text">
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title"><span class="h5">Soirée #{{ soiree.id }}</span><br><small>Créée depuis
+                        le {{ soiree.createdAt | date('d/m/Y') }} par <a
+                                href="{{ path('profile',{'id': host.id }) }}">{{ host.FullName }}</a></small></div>
+                <div class="card-text">
 
-                        <div class="row">
-                            <div class="col-md-9"><p>{{ soiree.description }}</p>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Organisateur</h5>
-                                        <hr>
-                                        <div class="card-text mb-3">
-                                            <div class="list-group {# {{ soirees|length>2 ? "dashboard" : "" }} #}">
-                                                {# {% for soiree in soirees %} #}
+                    <div class="row">
+                        <div class="col-md-9"><p>{{ soiree.description }}</p>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Organisateur</h5>
+                                    <hr>
+                                    <div class="card-text mb-3">
+                                        <div class="list-group {# {{ soirees|length>2 ? "dashboard" : "" }} #}">
+                                            {# {% for soiree in soirees %} #}
 
-                                                <div class="list-group-item list-group-item-action">
-                                                    <div class="row">
-                                                        <div class="col-md-9 ">
+                                            <div class="list-group-item list-group-item-action">
+                                                <div class="row">
+                                                    <div class="col-md-9 ">
 
-                                                            <a href="{{ path('profile',{'id': host.id }) }}"><h5 class="mb-1"><span class="badge badge-dark mr-2"><i
-                                                                                class="fad fa-crown"></i></span>{{ host.FullName }}</h5>
-                                                            </a>
-                                                        </div>
+                                                        <a href="{{ path('profile',{'id': host.id }) }}"><h5
+                                                                    class="mb-1"><span class="badge badge-dark mr-2"><i
+                                                                            class="fad fa-crown"></i></span>{{ host.FullName }}
+                                                            </h5>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <h5 class="card-title">Membres</h5>
-                                        <hr>
-                                        <div class="card-text mb-3">
-                                            <div class="list-group {# {{ soirees|length>2 ? "dashboard" : "" }} #}">
-                                                {# {% for soiree in soirees %} #}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><h5 class="card-title">Invités</h5></div>
+                                        <div class="col-md-6"><a href="{{ path('select_nb', {'id' : soiree.id}) }}"
+                                                                 class="btn btn-success">Ajouter un invité</a></div>
+                                    </div>
+                                    <hr>
+                                    <div class="card-text mb-3">
+                                        <div class="list-group  {{ guests|length>2 ? "dashboard" : "" }} ">
+                                            {% for guest in guests %}
 
                                                 <div class="list-group-item list-group-item-action">
                                                     <div class="row">
                                                         <div class="col-md-9 ">
 
-                                                            <a href=""><h5 class="mb-1"></h5>
+                                                            <a href=""><h5 class="mb-1"><span
+                                                                            class="badge badge-dark mr-2"><i
+                                                                                class="fad fa-mask"></i></span>{{ guest.FullName }}
+                                                                </h5>
                                                             </a>
                                                             <p class="mb-1">{# {{ ticket.description  | u.truncate(50, '...', false) }} #}</p>
                                                             {# <small>Posté par <a
@@ -59,24 +69,24 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {# {% endfor %} #}
-                                                {# {% if allSoirees > 6 %}
+                                            {% endfor %}
+                                            {# {% if allSoirees > 6 %}
                                         <div class="list-group-item list-group-item-action">
                                             <div class="row">
                                                 <h5><a class="ml-3" href="">Voir plus >></a></h5>
                                             </div>
                                         </div>
                                     {% endif %} #}
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
             </div>
+
         </div>
+    </div>
 {% endblock %}

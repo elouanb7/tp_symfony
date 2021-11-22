@@ -8,6 +8,7 @@ use App\Repository\SoireeRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -26,27 +27,26 @@ class UserSoireeController extends AbstractController
         $this->manager = $manager;
     }
 
-    #[Route('/soiree/{id}/select_nb', name: 'select_nb')]
-    public function select_nb($id, Request $request, SessionInterface $session): Response
+    #[Route('/soiree/detail/{id}/select_nb', name: 'select_nb')]
+    public function select_nb(Request $request, SessionInterface $session, RequestStack $requestStack): Response
     {
         $nbGuests = $request->request->getInt('nbGuests');
         if ($nbGuests) {
             $session->set('nbGuests', $nbGuests);
             return $this->redirectToRoute('add_guests', [
+                'id' => $requestStack->getSession()->get('soiree')
             ]);
         }
         return $this->render('user_soiree/select_nb.html.twig', [
+            'soiree' => $requestStack->getSession()->get('soiree'),
         ]);
-
     }
 
 
-    #[Route('/soiree/{id}/add_guests', name: 'add_guests')]
-    public function ajout($id, SessionInterface $session, Request $request): Response
+    #[Route('/soiree/detail/{id}/add_guests', name: 'add_guests')]
+    public function ajout($id, SessionInterface $session, Request $request, RequestStack $requestStack): Response
     {
-        $nbGuests = $session->get('nbGuests');
-
-
+        $nbGuests = $requestStack->getSession()->get('nbGuests');
         $form = $this->createForm(UserSoireeType::class, null, [
             'nbGuests' => $nbGuests,
         ]);
@@ -85,6 +85,7 @@ class UserSoireeController extends AbstractController
             return $this->redirectToRoute('soiree', [
                 'soiree' => $soiree,
                 'host' => $this->userRepo->findOneBy(['id' => $soiree->getCreatorId()]),
+                'id' => $soiree->getId()
             ]);
         }
         return $this->render('user_soiree/add_guests.html.twig', [

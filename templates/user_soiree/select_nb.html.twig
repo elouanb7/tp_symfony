@@ -8,11 +8,12 @@
             <div class="card-body">
                 <h1 class="card-title">Sélection du nombre d'invités à ajouter :</h1>
                 <p class="card-text">
-                <form class="form-group row" method="POST" action="{{ path('select_nb') }}">
+                <form class="form-group row" method="POST" action="{{ path('select_nb',{'id' : soiree}) }}">
                     <div class="col-md-10">
                         <select class="form-control custom-select" name="nbGuests">
                             <option value="null">---------Selectionnez une valeur---------</option>
-                            {% for guests in range(3,10) %}
+                            <option value="1">1 invité</option>
+                            {% for guests in range(2,20) %}
                                 <option value="{{ guests }}">{{ guests }} invités</option>
                             {% endfor %}
                         </select>
