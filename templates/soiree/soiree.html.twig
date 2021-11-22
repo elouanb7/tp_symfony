@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyParty - Soirée {{ soiree.id }}{% endblock %}
+
+{% block body %}
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title"><span class="h5">Soirée #{{ soiree.id }}</span><br><small>Créée depuis
+                            le {{ soiree.createdAt | date('d/m/Y') }} par <a href="{{ path('profile',{'id': host.id }) }}">{{ host.FullName }}</a></small></div>
+                    <div class="card-text">
+
+                        <div class="row">
+                            <div class="col-md-9"><p>{{ soiree.description }}</p>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Organisateur</h5>
+                                        <hr>
+                                        <div class="card-text mb-3">
+                                            <div class="list-group {# {{ soirees|length>2 ? "dashboard" : "" }} #}">
+                                                {# {% for soiree in soirees %} #}
+
+                                                <div class="list-group-item list-group-item-action">
+                                                    <div class="row">
+                                                        <div class="col-md-9 ">
+
+                                                            <a href="{{ path('profile',{'id': host.id }) }}"><h5 class="mb-1"><span class="badge badge-dark mr-2"><i
+                                                                                class="fad fa-crown"></i></span>{{ host.FullName }}</h5>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h5 class="card-title">Membres</h5>
+                                        <hr>
+                                        <div class="card-text mb-3">
+                                            <div class="list-group {# {{ soirees|length>2 ? "dashboard" : "" }} #}">
+                                                {# {% for soiree in soirees %} #}
+
+                                                <div class="list-group-item list-group-item-action">
+                                                    <div class="row">
+                                                        <div class="col-md-9 ">
+
+                                                            <a href=""><h5 class="mb-1"></h5>
+                                                            </a>
+                                                            <p class="mb-1">{# {{ ticket.description  | u.truncate(50, '...', false) }} #}</p>
+                                                            {# <small>Posté par <a
+                                                                    href="{{ path('profil',{'id':ticket.user.id}) }}">{{ ticket.user.firstName }} {{ ticket.user.lastName }}</a>
+                                                    </small> #}
+
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <div class="col-md-12 text-right">
+                                                                {# {% set myOlderDate = soiree.createdAt | date %}
+                                                        <small class="">{{ myOlderDate|ago }}</small> #}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {# {% endfor %} #}
+                                                {# {% if allSoirees > 6 %}
+                                        <div class="list-group-item list-group-item-action">
+                                            <div class="row">
+                                                <h5><a class="ml-3" href="">Voir plus >></a></h5>
+                                            </div>
+                                        </div>
+                                    {% endif %} #}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+{% endblock %}

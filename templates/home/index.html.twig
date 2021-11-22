@@ -18,10 +18,15 @@
                                 <div class="col-6 my-auto">
                                     <p class="card-text h5">Créé ta soirée dés aujourd'hui !</p>
                                 </div>
-                                <div class="col-3 "><a href="{{ path('app_login') }}" class="btn btn-primary btn-block">Se connecter</a></div>
-                                <div class="col-3 "><a href="" class="btn btn-outline-primary btn-block">Nous
-                                        rejoindre</a>
-                                </div>
+                                {% if app.user %}
+                                    <div class="col-6 "><a href="{{ path('soiree_create') }}" class="btn btn-primary btn-block">Créer une soirée</a></div>
+                                    {% else %}
+                                        <div class="col-3 "><a href="{{ path('app_login') }}" class="btn btn-primary btn-block">Se connecter</a></div>
+                                        <div class="col-3 "><a href="" class="btn btn-outline-primary btn-block">Nous
+                                                rejoindre</a>
+                                        </div>
+                                {% endif %}
+
                             </div>
                         </div>
                     </div>

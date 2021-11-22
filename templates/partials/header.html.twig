@@ -24,16 +24,32 @@
                 </div>#}
             </li>
         </ul>
-        {#<span class="navbar-text">
+        {% if app.user %}
+            <span class="navbar-text">
             <ul  class="navbar-nav mr-auto">
                 <li class="nav-item mr-2">
-                    <a class="nav-link" href="{{ path('profil', {'id': app.user.id}) }}">Profil</a>
+                    <a class="nav-link" href="{{ path('profile', {'id': app.user.id}) }}">Profil</a>
                 </li>
                 <li class="nav-item">
                     <a class="btn btn-outline-primary loginbutton" data-toggle="modal" data-target="#logout"
                        role="button">Déconnexion</a>
                 </li>
             </ul>
-    </span>#}
+    </span>
+
+            {% else %}
+                <span class="navbar-text">
+            <ul  class="navbar-nav mr-auto">
+                <li class="nav-item mr-2">
+                    <a class="btn btn-primary" href="{{ path('app_login') }}">Connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-primary"
+                       role="button">Inscription</a>
+                </li>
+            </ul>
+    </span>
+        {% endif %}
+
     </div>
 </nav>

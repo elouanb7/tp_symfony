@@ -18,16 +18,16 @@
                                     <h5 class="card-title">Soirées créées</h5>
                                     <hr>
                                     <div class="card-text">
-                                        <div class="list-group {# {{ soirees|length>2 ? "dashboard" : "" }} #}">
-                                            {# {% for soiree in soirees %} #}
+                                        <div class="list-group  {{ soireesCrees|length>2 ? "dashboard" : "" }} ">
+                                             {% for soiree in soireesCrees %}
 
                                             <div class="list-group-item list-group-item-action">
                                                 <div class="row">
                                                     <div class="col-md-9 ">
 
-                                                        <a href=""><h5 class="mb-1"></h5>
+                                                        <a href="{{ path('soiree',{'id' : soiree.id}) }}"><h5 class="mb-1">Soirée #{{ soiree.id }}</h5>
                                                         </a>
-                                                        <p class="mb-1">{# {{ ticket.description  | u.truncate(50, '...', false) }} #}</p>
+                                                        <p class="mb-1"> {{ soiree.description  | u.truncate(50, '...', false) }} </p>
                                                         {# <small>Posté par <a
                                                                     href="{{ path('profil',{'id':ticket.user.id}) }}">{{ ticket.user.firstName }} {{ ticket.user.lastName }}</a>
                                                     </small> #}
@@ -42,14 +42,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {# {% endfor %} #}
-                                            {# {% if allSoirees > 6 %}
+                                            {% endfor %}
+                                            {% if allSoirees > 6 %}
                                         <div class="list-group-item list-group-item-action">
                                             <div class="row">
                                                 <h5><a class="ml-3" href="">Voir plus >></a></h5>
                                             </div>
                                         </div>
-                                    {% endif %} #}
+                                    {% endif %}
                                         </div>
                                     </div>
                                 </div>
