@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Soiree;
 use App\Entity\User;
 use App\Entity\UserSoiree;
+use App\Service\SoireeService;
 use App\Repository\SoireeRepository;
 use App\Repository\UserRepository;
 use App\Form\SoireeType;
@@ -24,12 +25,14 @@ class SoireeController extends AbstractController
     private UserSoireeRepository $userSoireeRepo;
     private EntityManagerInterface $manager;
     private SessionInterface $session;
+    private SoireeService $soireeService;
 
-    public function __construct(SoireeRepository $soireeRepo, UserRepository $userRepo, UserSoireeRepository $userSoireeRepo, EntityManagerInterface $manager, SessionInterface $session)
+    public function __construct(SoireeRepository $soireeRepo, UserRepository $userRepo, UserSoireeRepository $userSoireeRepo, EntityManagerInterface $manager, SessionInterface $session, SoireeService $soireeService)
     {
         $this->soireeRepo = $soireeRepo;
         $this->userRepo = $userRepo;
         $this->userSoireeRepo = $userSoireeRepo;
+        $this->soireeService = $soireeService;
         $this->manager = $manager;
         $this->session = $session;
     }
@@ -43,12 +46,25 @@ class SoireeController extends AbstractController
         $host = $this->userRepo->findOneBy(['id' => $soiree->getCreatorId()]);
         $guestsUserSoiree = $this->userSoireeRepo->findBy(['soiree' => $soiree]);
         $guests = [];
-        foreach ($guestsUserSoiree as $guest){
-            $guestId = $guest->getUser()->getId();
-            $user = $this->userRepo->findOneBy(['id' => $guestId]);
-            array_push($guests, $user);
-        }
 
+        foreach ($guestsUserSoiree as $guest) {
+            if ($guest->getIsGuest()) {
+                $guestId = $guest->getUser()->getId();
+                $user = $this->userRepo->findOneBy(['id' => $guestId]);
+                array_push($guests, $user);
+            }
+        }
+        $this->session->set('guests', $guests);
+        $this->session->set('host', $host);
+
+        if ($soiree->getIsFull()==true){
+            $this->soireeService->update($id);
+            return $this->render('soiree/soiree.html.twig', [
+                'soiree' => $soiree,
+                'host' => $host,
+                'guests' => $guests
+            ]);
+        }
         return $this->render('soiree/soiree.html.twig', [
             'soiree' => $soiree,
             'host' => $host,
@@ -56,6 +72,32 @@ class SoireeController extends AbstractController
         ]);
     }
 
+    #[Route('/soiree/detail/{id}/full', name: 'soiree_full')]
+    public function setSoireeFull($id)
+    {
+        $soiree = $this->soireeRepo->findOneBy(['id' => $id]);
+        $soiree->setIsFull(true);
+        $this->manager->persist($soiree);
+        $this->manager->flush();
+
+        $host = $this->userRepo->findOneBy(['id' => $soiree->getCreatorId()]);
+        $guestsUserSoiree = $this->userSoireeRepo->findBy(['soiree' => $soiree]);
+        $guests = [];
+
+        foreach ($guestsUserSoiree as $guest) {
+            if ($guest->getIsGuest()) {
+                $guestId = $guest->getUser()->getId();
+                $user = $this->userRepo->findOneBy(['id' => $guestId]);
+                array_push($guests, $user);
+            }
+        }
+        return $this->redirectToRoute('soiree', [
+            'soiree' => $soiree,
+            'host' => $host,
+            'guests' => $guests,
+            'id' => $id
+        ]);
+    }
 
     #[Route('/soiree/create', name: 'soiree_create')]
     public function createSoiree(Request $request): Response
@@ -71,6 +113,7 @@ class SoireeController extends AbstractController
             $host = $this->getUser()->getUserIdentifier();
             $host = $this->userRepo->findOneBy(['email' => $host]);
             $soiree->setCreatorId($host->getId());
+            $soiree->setIsFull(false);
             $this->manager->persist($soiree);
             $userSoiree = new UserSoiree();
             $userSoiree->setUser($host);

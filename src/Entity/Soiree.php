@@ -59,6 +59,11 @@ class Soiree
      */
     private $users;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isFull;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -179,6 +184,18 @@ class Soiree
                 $user->setSoiree(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsFull(): ?bool
+    {
+        return $this->isFull;
+    }
+
+    public function setIsFull(?bool $isFull): self
+    {
+        $this->isFull = $isFull;
 
         return $this;
     }
