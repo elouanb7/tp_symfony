@@ -92,10 +92,7 @@ class SoireeController extends AbstractController
             }
         }
         return $this->redirectToRoute('soiree', [
-            'soiree' => $soiree,
-            'host' => $host,
-            'guests' => $guests,
-            'id' => $id
+            'id' => $id,
         ]);
     }
 
