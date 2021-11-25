@@ -44,13 +44,10 @@
                                             <div class="col-md-3"><a
                                                         href="{{ path('soiree_full', {'id' : soiree.id}) }}"
                                                         class="btn btn-warning">Verrouiller la liste</a></div>
-                                            {% else %}
-                                                <div class="col-md-3"><a href="{{ path('select_nb', {'id' : soiree.id}) }}"
-                                                                         class="btn btn-success">Dépenses</a></div>
+                                        {% else %}
+                                            <div class="col-md-3 text-center">Dépenses</div>
 
-                                                <div class="col-md-3"><a
-                                                            href="{{ path('soiree_full', {'id' : soiree.id}) }}"
-                                                            class="btn btn-warning">Dû/Avoir</a></div>
+                                            <div class="col-md-3 text-center">Dû/Avoir</div>
                                         {% endif %}
                                     </div>
                                     <hr>
@@ -60,7 +57,7 @@
 
                                                 <div class="list-group-item list-group-item-action">
                                                     <div class="row">
-                                                        <div class="col-md-9 ">
+                                                        <div class="col-md-6 ">
 
                                                             <a href="{{ path('profile',{'id' : guest.id}) }}"><h5
                                                                         class="mb-1"><span
@@ -74,12 +71,20 @@
                                                     </small> #}
 
                                                         </div>
+                                                        <div class="col-md-3 text-center">
+                                                            {% if guestsSoiree[loop.index].expenses == null %}
+                                                                0
+                                                            {% else %}
+                                                                {{ guestsSoiree[loop.index].expenses }}
+                                                            {% endif %}
 
-                                                        <div class="col-md-3">
-                                                            <div class="col-md-12 text-right">
-                                                                {# {% set myOlderDate = soiree.createdAt | date %}
-                                                        <small class="">{{ myOlderDate|ago }}</small> #}
-                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 text-center">
+                                                            {% if guestsSoiree[loop.index].debts == null %}
+                                                                0
+                                                            {% else %}
+                                                                {{ guestsSoiree[loop.index].debts }}
+                                                            {% endif %}
                                                         </div>
                                                     </div>
                                                 </div>

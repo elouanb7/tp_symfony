@@ -38,14 +38,21 @@ class SoireeService extends AbstractController
 
         dump($usersSoiree);
         $moneySpent = null;
-        foreach ($usersSoiree as $userSoiree){
+        foreach ($usersSoiree as $userSoiree) {
             $moneySpent += $userSoiree->getExpenses();
         }
         $soiree->setMoneySpent($moneySpent);
-        $averagePerUser = $moneySpent/count($usersSoiree);
+        $averagePerUser = $moneySpent / count($usersSoiree);
         $soiree->setAveragePerUser($averagePerUser);
         $soiree->setNbUsers(count($usersSoiree));
         $this->manager->persist($soiree);
+        foreach ($usersSoiree as $userSoiree) {
+            $expenses = $userSoiree->getExpenses();
+            $averagePerUser = $soiree->getAveragePerUser();
+            $debts = $averagePerUser - $expenses;
+            $userSoiree->setDebts($debts);
+            $this->manager->persist($userSoiree);
+        }
         $this->manager->flush();
     }
 

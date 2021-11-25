@@ -42,6 +42,11 @@ class UserSoiree
      */
     private $expenses;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $debts;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class UserSoiree
     public function setExpenses(?float $expenses): self
     {
         $this->expenses = $expenses;
+
+        return $this;
+    }
+
+    public function getDebts(): ?float
+    {
+        return $this->debts;
+    }
+
+    public function setDebts(?float $debts): self
+    {
+        $this->debts = $debts;
 
         return $this;
     }

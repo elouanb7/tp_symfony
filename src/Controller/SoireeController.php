@@ -45,6 +45,7 @@ class SoireeController extends AbstractController
         $soiree = $this->soireeRepo->findOneBy(['id' => $id]);
         $host = $this->userRepo->findOneBy(['id' => $soiree->getCreatorId()]);
         $guestsUserSoiree = $this->userSoireeRepo->findBy(['soiree' => $soiree]);
+        $hostSoiree = $this->userSoireeRepo->findBy(['soiree' => $soiree, 'isHost' => true]);
         $guests = [];
 
         foreach ($guestsUserSoiree as $guest) {
@@ -62,7 +63,9 @@ class SoireeController extends AbstractController
             return $this->render('soiree/soiree.html.twig', [
                 'soiree' => $soiree,
                 'host' => $host,
-                'guests' => $guests
+                'guests' => $guests,
+                'guestsSoiree' => $guestsUserSoiree,
+                'hostSoiree' => $hostSoiree,
             ]);
         }
         return $this->render('soiree/soiree.html.twig', [
