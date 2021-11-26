@@ -44,8 +44,8 @@ class SoireeController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         $soiree = $this->soireeRepo->findOneBy(['id' => $id]);
         $host = $this->userRepo->findOneBy(['id' => $soiree->getCreatorId()]);
-        $guestsUserSoiree = $this->userSoireeRepo->findBy(['soiree' => $soiree]);
-        $hostSoiree = $this->userSoireeRepo->findBy(['soiree' => $soiree, 'isHost' => true]);
+        $guestsUserSoiree = $this->userSoireeRepo->findBy(['soiree' => $soiree, 'isGuest' => true],['expenses' => 'DESC']);
+        $hostSoiree = $this->userSoireeRepo->findOneBy(['soiree' => $soiree, 'isHost' => true]);
         $guests = [];
 
         foreach ($guestsUserSoiree as $guest) {

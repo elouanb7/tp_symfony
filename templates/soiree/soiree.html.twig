@@ -23,13 +23,29 @@
 
                                             <div class="list-group-item list-group-item-action">
                                                 <div class="row">
-                                                    <div class="col-md-9 ">
+                                                    <div class="col-md-6 ">
 
                                                         <a href="{{ path('profile',{'id': host.id }) }}"><h5
                                                                     class="mb-1"><span class="badge badge-dark mr-2"><i
                                                                             class="fad fa-crown"></i></span>{{ host.FullName }}
                                                             </h5>
                                                         </a>
+                                                    </div>
+                                                    <div class="col-md-3 text-center">
+                                                        {% if hostSoiree.expenses == null %}
+                                                            0
+                                                        {% else %}
+                                                            {{ hostSoiree.expenses }}
+                                                        {% endif %}
+
+                                                    </div>
+                                                    <div class="col-md-3 text-center">
+                                                        {% if hostSoiree.debts == null %}
+                                                            0
+                                                        {% else %}
+                                                            {{ hostSoiree.debts }}
+                                                        {% endif %}
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -54,7 +70,6 @@
                                     <div class="card-text mb-3">
                                         <div class="list-group  {{ guests|length>2 ? "dashboard" : "" }} ">
                                             {% for guest in guests %}
-
                                                 <div class="list-group-item list-group-item-action">
                                                     <div class="row">
                                                         <div class="col-md-6 ">
@@ -72,18 +87,18 @@
 
                                                         </div>
                                                         <div class="col-md-3 text-center">
-                                                            {% if guestsSoiree[loop.index].expenses == null %}
+                                                            {% if guestsSoiree[loop.index-1].expenses == null %}
                                                                 0
                                                             {% else %}
-                                                                {{ guestsSoiree[loop.index].expenses }}
+                                                                {{ guestsSoiree[loop.index-1].expenses }}
                                                             {% endif %}
 
                                                         </div>
                                                         <div class="col-md-3 text-center">
-                                                            {% if guestsSoiree[loop.index].debts == null %}
+                                                            {% if guestsSoiree[loop.index-1].debts == null %}
                                                                 0
                                                             {% else %}
-                                                                {{ guestsSoiree[loop.index].debts }}
+                                                                {{ guestsSoiree[loop.index-1].debts }}
                                                             {% endif %}
                                                         </div>
                                                     </div>
@@ -100,6 +115,9 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-3">
+                            <p>La soirée aura lieu le {{ soiree.date | date('d/m/Y') }} à {{ soiree.date | date('H') }}h{% if  soiree.date | date('i') != 00 %}{{ soiree.date | date('i') }}{% endif %}. </p>
                         </div>
                     </div>
                 </div>
