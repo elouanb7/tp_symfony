@@ -70,22 +70,27 @@ class SoireeService extends AbstractController
         while ($count != $nbUsers){
             $userSoiree1 = $usersSoiree[$count];
             $user1 = $userSoiree1->getUser();
+            if ($max<0){
+                break;
+            }
             $userSoiree2 = $usersSoiree[$max];
             $user2 = $userSoiree2->getUser();
             $max--;
             $user1debts = $userSoiree1->getDebts();
             $user2debts = $userSoiree2->getDebts();
-            array_push($tricount,"".$user2->getFullName()." doit donner ".$user2debts." à ".$user1->getFullName().".");
+            if ($user2debts != 0) {
+                array_push($tricount, "" . $user2->getFullName() . " doit donner " . $user2debts . " à " . $user1->getFullName() . ".");
+            }
+            dump($tricount);
             $usersDebt = $user1debts + $user2debts;
             $userSoiree1->setDebts($usersDebt);
             $userSoiree2->setDebts(0);
             if ($usersDebt>=0){
                 $count++;
-                array_pop($usersSoiree);
+                /*array_shift($usersSoiree);*/
             }
         }
-        dd($tricount);
-
+        return($tricount);
     }
 
 }

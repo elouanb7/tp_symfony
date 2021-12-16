@@ -60,13 +60,15 @@ class SoireeController extends AbstractController
 
         if ($soiree->getIsFull()==true){
             $this->soireeService->update($id);
-            $this->soireeService->tricount($id);
+            $tricount = $this->soireeService->tricount($id);
+            $this->soireeService->update($id);
             return $this->render('soiree/soiree.html.twig', [
                 'soiree' => $soiree,
                 'host' => $host,
                 'guests' => $guests,
                 'guestsSoiree' => $guestsUserSoiree,
                 'hostSoiree' => $hostSoiree,
+                'tricount' => $tricount,
             ]);
         }
         return $this->render('soiree/soiree.html.twig', [
