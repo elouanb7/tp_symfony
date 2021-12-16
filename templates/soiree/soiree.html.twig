@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MyParty - Soirée {{ soiree.id }}{% endblock %}
+{% block title %}MyParty - Soirée{{ soiree.id }}{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
@@ -13,7 +13,7 @@
 
                     <div class="row">
                         <div class="col-md-9"><p>{{ soiree.description }}</p>
-                            <div class="card">
+                            <div class="card mb-3">
                                 <div class="card-body">
                                     <h5 class="card-title">Organisateur</h5>
                                     <hr>
@@ -31,22 +31,22 @@
                                                             </h5>
                                                         </a>
                                                     </div>
+                                                    {% if soiree.isFull == true %}
                                                     <div class="col-md-3 text-center">
                                                         {% if hostSoiree.expenses == null %}
                                                             0
                                                         {% else %}
-                                                            {{ hostSoiree.expenses }}
+                                                            {{ hostSoiree.expenses|number_format(2) }}€
                                                         {% endif %}
-
                                                     </div>
                                                     <div class="col-md-3 text-center">
                                                         {% if hostSoiree.debts == null %}
                                                             0
                                                         {% else %}
-                                                            {{ hostSoiree.debts }}
+                                                            {{ hostSoiree.debts|number_format(2) }}€
                                                         {% endif %}
-
                                                     </div>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -86,11 +86,12 @@
                                                     </small> #}
 
                                                         </div>
+                                                        {% if soiree.isFull == true %}
                                                         <div class="col-md-3 text-center">
                                                             {% if guestsSoiree[loop.index-1].expenses == null %}
                                                                 0
                                                             {% else %}
-                                                                {{ guestsSoiree[loop.index-1].expenses }}
+                                                                {{ guestsSoiree[loop.index-1].expenses|number_format(2) }}€
                                                             {% endif %}
 
                                                         </div>
@@ -98,9 +99,10 @@
                                                             {% if guestsSoiree[loop.index-1].debts == null %}
                                                                 0
                                                             {% else %}
-                                                                {{ guestsSoiree[loop.index-1].debts }}
+                                                                {{ guestsSoiree[loop.index-1].debts|number_format(2) }}€
                                                             {% endif %}
                                                         </div>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             {% endfor %}
@@ -117,9 +119,15 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <p>La soirée aura lieu le {{ soiree.date | date('d/m/Y') }} à {{ soiree.date | date('H') }}h{% if  soiree.date | date('i') != 00 %}{{ soiree.date | date('i') }}{% endif %}. </p>
+                            <p>La soirée aura lieu le : <br> <span class="h6">{{ soiree.date | date('d/m/Y') }} à {{ soiree.date | date('H') }}h{% if  soiree.date | date('i') != 00 %}{{ soiree.date | date('i') }}{% endif %}</span>.</p>
+                            <hr>
+                            <a href="" class="btn btn-warning btn-block">Modifier mes dépenses</a>
                         </div>
                     </div>
+                    <h5>Tricount :</h5>
+                    <p>
+                        machin doit x a machin2
+                    </p>
                 </div>
 
             </div>
