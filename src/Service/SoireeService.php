@@ -81,7 +81,6 @@ class SoireeService extends AbstractController
             if ($user2debts != 0) {
                 array_push($tricount, "" . $user2->getFullName() . " doit donner " . $user2debts . " à " . $user1->getFullName() . ".");
             }
-            dump($tricount);
             $usersDebt = $user1debts + $user2debts;
             $userSoiree1->setDebts($usersDebt);
             $userSoiree2->setDebts(0);
@@ -95,4 +94,3 @@ class SoireeService extends AbstractController
 
 }
 
-;

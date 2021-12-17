@@ -126,12 +126,15 @@
                             <a href="" class="btn btn-warning btn-block">Modifier mes dépenses</a>
                         </div>
                     </div>
+                    {% if tricount is defined %}
                     <h5>Tricount :</h5>
                     <p>
-                        {% for line in tricount %}
-                            {{ line }}<br>
-                        {% endfor %}
+                            {% for line in tricount %}
+                                {{ line }}<br>
+                            {% endfor %}
                     </p>
+                        {% else %}
+                    {% endif %}
                 </div>
 
             </div>
