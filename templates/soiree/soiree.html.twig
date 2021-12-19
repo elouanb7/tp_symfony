@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container mt-5">
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-body">
                 <div class="card-title"><span class="h5">Soirée #{{ soiree.id }}</span><br><small>Créée depuis
                         le {{ soiree.createdAt | date('d/m/Y') }} par <a
@@ -123,7 +123,7 @@
                                         class="h6">{{ soiree.date | date('d/m/Y') }} à {{ soiree.date | date('H') }}h{% if  soiree.date | date('i') != 00 %}{{ soiree.date | date('i') }}{% endif %}</span>.
                             </p>
                             <hr>
-                            <a href="" class="btn btn-warning btn-block">Modifier mes dépenses</a>
+                            <a href="{{ path('expenses',{'id' : soiree.id,'user' : app.user.id}) }}" class="btn btn-warning btn-block">Modifier mes dépenses</a>
                         </div>
                     </div>
                     {% if tricount is defined %}
