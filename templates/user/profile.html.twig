@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyParty - {{ user.FullName }}{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title"><span class="h5">{{ user.FullName }}</span><br><small>Membre depuis
+                        le {{ user.createdAt | date('d/m/Y') }}</small></div>
+                <div class="card-text">
+
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Soirées créées</h5>
+                                    <hr>
+                                    <div class="card-text">
+                                        <div class="list-group  {{ soireesCrees|length>2 ? "dashboard" : "" }} ">
+                                             {% for soiree in soireesCrees %}
+
+                                            <div class="list-group-item list-group-item-action">
+                                                <div class="row">
+                                                    <div class="col-md-9 ">
+
+                                                        <a href="{{ path('soiree',{'id' : soiree.id}) }}"><h5 class="mb-1">Soirée #{{ soiree.id }}</h5>
+                                                        </a>
+                                                        <p class="mb-1"> {{ soiree.description  | u.truncate(50, '...', false) }} </p>
+                                                        {# <small>Posté par <a
+                                                                    href="{{ path('profil',{'id':ticket.user.id}) }}">{{ ticket.user.firstName }} {{ ticket.user.lastName }}</a>
+                                                    </small> #}
+
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div class="col-md-12 text-right">
+                                                            {# {% set myOlderDate = soiree.createdAt | date %}
+                                                        <small class="">{{ myOlderDate|ago }}</small> #}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% if allSoirees > 6 %}
+                                        <div class="list-group-item list-group-item-action">
+                                            <div class="row">
+                                                <h5><a class="ml-3" href="">Voir plus >></a></h5>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

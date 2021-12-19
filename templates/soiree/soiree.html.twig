@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyParty - Soirée {{ soiree.id }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="card-title"><span class="h5">Soirée #{{ soiree.id }}</span><br><small>Créée depuis
+                        le {{ soiree.createdAt | date('d/m/Y') }} par <a
+                                href="{{ path('profile',{'id': host.id }) }}">{{ host.FullName }}</a></small></div>
+                <div class="card-text">
+
+                    <div class="row">
+                        <div class="col-md-9"><p>{{ soiree.description }}</p>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Organisateur</h5>
+                                    <hr>
+                                    <div class="card-text mb-3">
+                                        <div class="list-group {# {{ soirees|length>2 ? "dashboard" : "" }} #}">
+                                            {# {% for soiree in soirees %} #}
+
+                                            <div class="list-group-item list-group-item-action">
+                                                <div class="row">
+                                                    <div class="col-md-6 ">
+
+                                                        <a href="{{ path('profile',{'id': host.id }) }}"><h5
+                                                                    class="mb-1"><span class="badge badge-dark mr-2"><i
+                                                                            class="fad fa-crown"></i></span>{{ host.FullName }}
+                                                            </h5>
+                                                        </a>
+                                                    </div>
+                                                    {% if soiree.isFull == true %}
+                                                        <div class="col-md-3 text-center">
+                                                            {% if hostSoiree.expenses == null %}
+                                                                0€
+                                                            {% else %}
+                                                                {{ hostSoiree.expenses|number_format(2) }}€
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="col-md-3 text-center">
+                                                            {% if hostSoiree.debts == null %}
+                                                                0€
+                                                            {% else %}
+                                                                {{ hostSoiree.debts|number_format(2) }}€
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><h5 class="card-title">Invités</h5></div>
+                                        {% if soiree.isFull == false %}
+                                            <div class="col-md-3"><a href="{{ path('select_nb', {'id' : soiree.id}) }}"
+                                                                     class="btn btn-success">Ajouter un invité</a></div>
+
+                                            <div class="col-md-3"><a
+                                                        href="{{ path('soiree_full', {'id' : soiree.id}) }}"
+                                                        class="btn btn-warning">Verrouiller la liste</a></div>
+                                        {% else %}
+                                            <div class="col-md-3 text-center">Dépenses</div>
+
+                                            <div class="col-md-3 text-center">Dû/Avoir</div>
+                                        {% endif %}
+                                    </div>
+                                    <hr>
+                                    <div class="card-text mb-3">
+                                        <div class="list-group  {{ guests|length>2 ? "dashboard" : "" }} ">
+                                            {% for guest in guests %}
+                                                <div class="list-group-item list-group-item-action">
+                                                    <div class="row">
+                                                        <div class="col-md-6 ">
+
+                                                            <a href="{{ path('profile',{'id' : guest.id}) }}"><h5
+                                                                        class="mb-1"><span
+                                                                            class="badge badge-dark mr-2"><i
+                                                                                class="fad fa-mask"></i></span>{{ guest.FullName }}
+                                                                </h5>
+                                                            </a>
+                                                            <p class="mb-1">{# {{ ticket.description  | u.truncate(50, '...', false) }} #}</p>
+                                                            {# <small>Posté par <a
+                                                                    href="{{ path('profil',{'id':ticket.user.id}) }}">{{ ticket.user.firstName }} {{ ticket.user.lastName }}</a>
+                                                    </small> #}
+
+                                                        </div>
+                                                        {% if soiree.isFull == true %}
+                                                            <div class="col-md-3 text-center">
+                                                                {% if guestsSoiree[loop.index-1].expenses == null %}
+                                                                    0€
+                                                                {% else %}
+                                                                    {{ guestsSoiree[loop.index-1].expenses|number_format(2) }}€
+                                                                {% endif %}
+
+                                                            </div>
+                                                            <div class="col-md-3 text-center">
+                                                                {% if guestsSoiree[loop.index-1].debts == null %}
+                                                                    0€
+                                                                {% else %}
+                                                                    {{ guestsSoiree[loop.index-1].debts|number_format(2) }}€
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                            {# {% if allSoirees > 6 %}
+                                        <div class="list-group-item list-group-item-action">
+                                            <div class="row">
+                                                <h5><a class="ml-3" href="">Voir plus >></a></h5>
+                                            </div>
+                                        </div>
+                                    {% endif %} #}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <p>La soirée aura lieu le : <br> <span
+                                        class="h6">{{ soiree.date | date('d/m/Y') }} à {{ soiree.date | date('H') }}h{% if  soiree.date | date('i') != 00 %}{{ soiree.date | date('i') }}{% endif %}</span>.
+                            </p>
+                            <hr>
+                            <a href="{{ path('expenses',{'id' : soiree.id,'user' : app.user.id}) }}" class="btn btn-warning btn-block">Modifier mes dépenses</a>
+                        </div>
+                    </div>
+                    {% if tricount is defined %}
+                    <h5>Tricount :</h5>
+                    <p>
+                            {% for line in tricount %}
+                                {{ line }}<br>
+                            {% endfor %}
+                    </p>
+                        {% else %}
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

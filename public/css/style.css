@@ -1,0 +1,46 @@
+.dashboard{
+    height: 222px;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    border-radius: 10px;
+}
+
+.dashboard::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+.dashboard::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0);
+}
+
+/* Handle */
+.dashboard::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.dashboard::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    border-radius: 10px;
+}
