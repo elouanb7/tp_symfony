@@ -1,12 +1,12 @@
-#TP SYMFONY
+# TP SYMFONY
 
 *A rendre pour le 19 Décembre 2021 au soir*
 
-##Démarrage
+## Démarrage
 
 Une fois le projet cloné, il faut importer le fichier db.sql dans votre phpmyadmin.
 
-##Fixtures
+## Fixtures
 
 Les adresses mail contenue dans la base de donnée sont des adresses générés par **Faker** dans *src/DataFixtures/AppFixtures.php*.
 Si vous le souhaitez vous pouvez les changer :
