@@ -6,6 +6,12 @@
 
 Une fois le projet cloné, il faut importer le fichier db.sql dans votre phpmyadmin.
 
+## .Env.local
+
+Dans le projet, a la racine, il faut créer un fichier .env.local qui contient :
+* APP_SECRET=1b4601c19444ffa5bf5d1911323999d0
+* DATABASE_URL="mysql://root:@localhost:3306/tp_symfony?serverVersion=5.7"
+
 ## Fixtures
 
 Les adresses mail contenue dans la base de donnée sont des adresses générés par **Faker** dans *src/DataFixtures/AppFixtures.php*.
@@ -16,3 +22,6 @@ Si vous le souhaitez vous pouvez les changer :
 
 Sinon vous pouvez utiliser les comptes déjà présents dans la base de donnée dans la table *User*
 Le mots de passe par défaut pour tous les comptes générés sont : **password**
+
+## Points d'amélioration
+
